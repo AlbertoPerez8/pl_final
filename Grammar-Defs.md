@@ -1,6 +1,6 @@
-Definition
+# Definition
 
-Tokens
+## Tokens
 
 Character ::= a-z | A-Z | ? | _ | ~ | "+" | - | "*" | & | > | < | (Everything that isn't in other tokens)
 
@@ -8,9 +8,10 @@ Digit ::= 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 |9
 
 Delimiter ::= ( | ) | [ | ] | "{" | "}" | , | ; | " | / | \
 
-Operator ::= = | :
+Operator ::= = | :Visual Server (ViSe) Definition
 
-Grammar
+
+## Grammar
 
 Exp ::= Def | SecondaryExp | Id : Start | Id ; | HttpGet ;
 
