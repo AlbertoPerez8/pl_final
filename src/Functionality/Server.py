@@ -1,5 +1,6 @@
 from flask import Flask
-from flask import request as req
+from flask import request
+import requests as req
 import json
 import logging
 
@@ -49,7 +50,7 @@ class Server():
         except:
             self.variables[var_id] = parsed
         
-    def add_route(self, server_id, route, route_id, action):
+    def add_route(self, server_id, route, route_id=None):
         if(not route_id):
             route_id = server_id + route
         self.variables[route_id] = Route_ID(route, server_id)
@@ -73,5 +74,31 @@ class Server():
         
         return self.add_endpoints(endpoint.server_id, str(endpoint.route), create_action)
 
-    
+    def read_data(self, route_id, object_id):
+        endpoint = self.variables[route_id]
 
+        def return_action():
+            return str(self.variables[object_id])
+        
+        return self.add_endpoints(endpoint.server_id, endpoint.route, return_action)
+
+    def create_server(self, assigned_id, port = 80):
+        if(port not in self.used_ports):
+            self.variables[assigned_id] = Server_ID(Flask(assigned_id), port)
+            self.used_ports.append(port)
+            return "Server instance with ID: '" +assigned_id + "' created at port: " + str(port) + "\n(Server not running) To run ->" + assigned_id + ": start;"
+        else:
+            return "Not accepted, port: " + str(port) + ", is already in use"
+        
+    def start_server(self, server_id):
+        try:
+            self.variables[server_id].flask_instance.run(port = self.variables[server_id].port)
+            return "Server started at: http://localhost/"+str(self.variables[server_id].port) + "/"
+        except:
+            return "Server failed to start"
+    
+    def print_object(self, object_id):
+        return str(self.variables[object_id])
+
+    def http_get(self, url):
+        return json.dumps(req.get(url).json())

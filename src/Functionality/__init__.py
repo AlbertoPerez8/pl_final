@@ -1,1 +1,1 @@
-from Functionality.server import Server
+from Functionality.Server import Server
