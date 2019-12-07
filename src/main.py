@@ -19,3 +19,10 @@ if __name__ == '__main__':
     # s.add_endpoints("server", '/', lambda : 'Hello, World')#placeholder, necessary for execution
 
 
+    ## Server Communication Test.
+    # test = httpGet(url= “https://reqres.in/api/users?page=2”);
+    # test_route = server: setRoutes(url= "/test");
+    # test_route: readData(body= test);
+    # s.update_variables("test", s.http_get("https://reqres.in/api/users?page=2"))
+    # s.add_route("server", '/test', "test_route")
+    # s.read_data("test_route", "test")
