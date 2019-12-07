@@ -4,7 +4,7 @@ from Functionality import Server
 if __name__ == '__main__':
     s = Server()
 
-    # Beginning Test. Creates Server, updates variables, adds routes, reads data, etc.
+    ## Beginning Test. Creates Server, updates variables, adds routes, reads data, etc.
     s.create_server("server", 5000)
     s.update_variables("data", '{}')
     s.update_variables("data2", '{"name": "Juana", "lastName": "Petraca"}')
@@ -28,6 +28,11 @@ if __name__ == '__main__':
     # s.read_data("test_route", "test")
 
 
-    # Tests the print_object method of the servers.
+    ## Tests the print_object method of the servers.
     # s.print_object("test")
     # s.print_object("data2")
+
+
+    ## Testing non Id route call: server: setRoutes(url= "/empty"): readData(body: Data2)
+    # s.create_data(s.add_route("server", "/empty"), "data2")
+    # s.start_server("server")
