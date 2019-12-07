@@ -107,9 +107,9 @@ def p_server_sets(p):
 def p_server_reads(p):
     'Exp : ID COLON READDATA LP BODY EQUAL ID RP SEMICOLON'
     if p[7] not in code.variables:
-        p[0] = cl.id_not_defined(p[7])
+        p[0] = clean.id_not_defined(p[7])
     elif p[1] not in code.variables:
-        p[0] = cl.id_not_defined(p[1])
+        p[0] = clean.id_not_defined(p[1])
     else:
         p[0] = code.read_data(p[1], p[7])
 
@@ -124,6 +124,58 @@ def p_server_creates_id(p):
         code.update_variables(p[1], code.create_data(p[3], p[9]))
         p[0] = clean.id_saved(p[1])
 
+
+def p_server_read_id(p):
+    'Exp : ID EQUAL ID COLON READDATA LP BODY EQUAL ID RP SEMICOLON'
+    if p[9] not in code.variables:
+        p[0] = clean.id_not_defined(p[9])
+    elif p[3] not in code.variables:
+        p[0] = clean.id_not_defined(p[3])
+    else:
+        code.update_variables(p[1], code.read_data(p[3], p[9]))
+        p[0] = clean.id_saved(p[1])
+
+
+def p_server_creates(p):
+    'Exp : ID COLON CREATEDATA LP OBJECT EQUAL ID RP SEMICOLON'
+    if p[7] not in code.variables:
+        p[0] = clean.id_not_defined(p[7])
+    elif p[1] not in code.variables:
+        p[0] = clean.id_not_defined(p[1])
+    else:
+        p[0] = code.create_data(p[1], p[7])
+
+
+def p_set_routes_read(p):
+    'Exp : ID COLON SETROUTES LP URL EQUAL STRING RP COLON READDATA LP BODY EQUAL ID RP SEMICOLON'
+    if p[1] not in code.variables:
+        p[0] = clean.id_not_defined(p[1])
+    elif p[14] not in code.variables:
+        p[0] = clean.id_not_defined(p[14])
+    else:
+        p[0] = code.read_data(code.add_route(p[1], clean.string_cleaner(p[7])), p[14])
+
+
+def p_set_routes_create(p):
+    'Exp : ID COLON SETROUTES LP URL EQUAL STRING RP COLON CREATEDATA LP OBJECT EQUAL ID RP SEMICOLON'
+    if p[1] not in code.variables:
+        p[0] = clean.id_not_defined(p[1])
+    elif p[14] not in code.variables:
+        p[0] = clean.id_not_defined(p[14])
+    else:
+        p[0] = code.create_data(code.add_route(p[1], clean.string_cleaner(p[7])), p[14])
+
+
+def p_set_routes_non_id(p): # returns name of added route id
+    'Exp : ID COLON SETROUTES LP URL EQUAL STRING RP SEMICOLON'
+    if p[1] not in code.variables:
+        p[0] = clean.id_not_defined(p[1])
+    else:
+        p[0] = code.add_route(p[1], clean.string_cleaner(p[7]))
+
+
+def p_error(p):
+    print("Syntax error at ’%s’" % p)
 
 
 # Build Parser
