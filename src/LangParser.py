@@ -66,5 +66,65 @@ def p_variable(p):
                 break
 
 
+def p_create_server(p):
+    'Exp : ID EQUAL CREATESERVER LP PORT EQUAL INT RP SEMICOLON'
+    p[0] = code.create_server(p[1], p[7])
+
+
+def p_create_server_empty_port(p):
+    'Exp : ID EQUAL CREATESERVER LP RP SEMICOLON'
+    p[0] = code.create_server(p[1])
+
+
+def p_server_start(p):
+    'Exp : ID COLON START SEMICOLON'
+    if p[1] not in code.variables:
+        p[0] = clean.id_not_defined(p[1])
+    else:
+        p[0] = code.start_server(p[1])
+
+
+def p_communicate_id(p):
+    'Exp : ID EQUAL HTTPGET LP URL EQUAL STRING RP SEMICOLON'
+    code.update_variables(p[1], code.http_get(clean.string_cleaner(p[7])))
+    p[0] = clean.id_saved(p[1])
+
+
+def p_communicate(p):
+    'Exp : HTTPGET LP URL EQUAL STRING RP SEMICOLON'
+    p[0] = code.http_get(clean.string_cleaner(p[5]))
+
+
+def p_server_sets(p):
+    'Exp : ID EQUAL ID COLON SETROUTES LP URL EQUAL STRING RP SEMICOLON'
+    if p[3] not in code.variables:
+        p[0] = clean.id_not_defined(p[3])
+    else:
+        code.add_route(p[3], clean.string_cleaner(p[9]), p[1])
+        p[0] = clean.id_saved(p[1]) + "\nRoute added successfully"
+
+
+def p_server_reads(p):
+    'Exp : ID COLON READDATA LP BODY EQUAL ID RP SEMICOLON'
+    if p[7] not in code.variables:
+        p[0] = cl.id_not_defined(p[7])
+    elif p[1] not in code.variables:
+        p[0] = cl.id_not_defined(p[1])
+    else:
+        p[0] = code.read_data(p[1], p[7])
+
+
+def p_server_creates_id(p):
+    'Exp : ID EQUAL ID COLON CREATEDATA LP OBJECT EQUAL ID RP SEMICOLON'
+    if p[9] not in code.variables:
+        p[0] = clean.id_not_defined(p[9])
+    elif p[3] not in code.variables:
+        p[0] = clean.id_not_defined(p[3])
+    else:
+        code.update_variables(p[1], code.create_data(p[3], p[9]))
+        p[0] = clean.id_saved(p[1])
+
+
+
 # Build Parser
 parser = parse.yacc()
