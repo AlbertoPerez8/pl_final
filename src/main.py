@@ -26,3 +26,8 @@ if __name__ == '__main__':
     # s.update_variables("test", s.http_get("https://reqres.in/api/users?page=2"))
     # s.add_route("server", '/test', "test_route")
     # s.read_data("test_route", "test")
+
+
+    # Tests the print_object method of the servers.
+    # s.print_object("test")
+    # s.print_object("data2")
