@@ -58,16 +58,21 @@ def t_COMMENTS(t):
     r'\// . * \\'
     pass
 
+#Strings
+def t_STRING(t):
+    r'\"(.*?)"'
+    return t
+
 #Equals sign
 t_EQUAL = r'='
 
 #Parenthesis
-t_LP = r'(' #left
-t_RP = r')' #right
+t_LP = r'\(' #left
+t_RP = r'\)' #right
 
 #Curly brackets
-t_LC = r'{' #left
-t_RC = r'}' #right
+t_LC = r'\{' #left
+t_RC = r'\}' #right
 
 #Comma, Semicolon & colon
 t_COMMA = r','
@@ -78,8 +83,8 @@ t_COLON = r':'
 t_ignore = '\t \n'
 
 #Error
-def t_ERROR(t):
-    print("Illegal Character '%s'" %t.value[0])
+def t_error(t):
+    print("Illegal Character %s'" % t.value[0])
     t.lexer.skip(1)
 
 #Build lexer
@@ -88,10 +93,10 @@ lexer = lex.lex()
 lexer.input(fileRead())
 
 
-#
-# while True:
-#     tok = lexer.token()
-#     if not tok : break
-#     print(tok)
 
-#print(tokenList)
+"""while True:
+    tok = lexer.token()
+    if not tok : break
+    print(tok)
+
+print(tokens)"""
