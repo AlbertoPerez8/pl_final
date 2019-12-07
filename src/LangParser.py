@@ -175,8 +175,7 @@ def p_set_routes_non_id(p): # returns name of added route id
 
 
 def p_error(p):
-    print("Syntax error at ’%s’" % p)
-
+    return
 
 # Build Parser
 parser = parse.yacc()

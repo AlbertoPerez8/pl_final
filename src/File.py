@@ -9,5 +9,4 @@ def fileRead():
     
     return fileTokens
 
-
 #print(fileRead())
