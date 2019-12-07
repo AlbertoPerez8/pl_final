@@ -1,5 +1,5 @@
 def fileRead():
-    file = open('Final/src/Test.txt', 'r')
+    file = open('Test.txt', 'r')
     lines = file.readlines()
     file.close()
 

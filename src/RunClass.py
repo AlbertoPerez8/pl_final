@@ -1,20 +1,21 @@
 import LangParser as parser
 
 
-# Focuses on running the application appropriately
+#Not used to run the main program.  
+
 def run():
     parse = parser.parser
     while True:
         try:
-            s = input('ViSe >> ')
+            file = input("Lang>>\nFilename:")
         except EOFError:
             break
-        if not s:
+        if not file:
             continue
-        elif s == "Exit" or s == "exit":
+        elif file == "Exit" or file == "exit":
+            print("Exit")
             break
-        result = parse.parse(s)
+        result = parse.parse(file)
         print(result)
-
 
 run()
