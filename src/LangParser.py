@@ -4,22 +4,22 @@ from Functionality import Server as s
 import cleaner as clean
 
 
-code = s.Server()
+code = s
 
 
 # Defined here are all the methods that deal with the different expressions (HELP, ID EQUAL ID SEMICOLON, etc.)
-def p_help(p):
+def par_help(p):
     ' Exp : HELP'
     p[0] = "To create a server, run: 'createServer (port= 3000);' and store it on a variable.\nTo run the server, run: 'variable : start;' \n"
 
 
-def p_object_def_empty(p):
+def par_object_def_empty(p):
     'Exp : ID EQUAL JSON COLON LC RC SEMICOLON'
     code.update_variables(p[1], "{}")
     p[0] = clean.id_saved(p[1])
 
 
-def p_id_id(p):
+def par_id_id(p):
     'Exp : ID EQUAL ID SEMICOLON'
     if p[3] not in code.variables:
         p[0] = clean.id_not_defined(p[3])
@@ -28,34 +28,34 @@ def p_id_id(p):
         p[0] = clean.id_saved(p[1])
 
 
-def p_id_int(p):
+def par_id_int(p):
     'Exp : ID EQUAL INT SEMICOLON'
     code.update_variables(p[1], p[3])
     p[0] = clean.id_saved(p[1])
 
 
-def p_object_def(p):
+def par_object_def(p):
     'Exp : ID EQUAL JSON COLON LC Inside RC SEMICOLON'
     code.update_variables(p[1], "{"+p[6]+"}")
     p[0] = clean.id_saved(p[1])
 
 
-def p_inside_object_rec(p):
+def par_inside_object_rec(p):
     'Inside : InsideRec'
     p[0] = str(p[1])
 
 
-def p_inside_object(p):
+def par_inside_object(p):
     'Inside :  STRING COLON STRING '
     p[0] = str(p[1])+str(p[2])+str(p[3])
 
 
-def p_inside_rec(p):
+def par_inside_rec(p):
     'InsideRec : Inside COMMA Inside '
     p[0] = str(p[1])+str(p[2])+str(p[3])
 
 
-def p_variable(p):
+def par_variable(p):
     'Exp : ID SEMICOLON'
     if p[1] not in code.variables:
         p[0] = clean.id_not_defined(p[1])
@@ -66,17 +66,17 @@ def p_variable(p):
                 break
 
 
-def p_create_server(p):
+def par_create_server(p):
     'Exp : ID EQUAL CREATESERVER LP PORT EQUAL INT RP SEMICOLON'
     p[0] = code.create_server(p[1], p[7])
 
 
-def p_create_server_empty_port(p):
+def par_create_server_empty_port(p):
     'Exp : ID EQUAL CREATESERVER LP RP SEMICOLON'
     p[0] = code.create_server(p[1])
 
 
-def p_server_start(p):
+def par_server_start(p):
     'Exp : ID COLON START SEMICOLON'
     if p[1] not in code.variables:
         p[0] = clean.id_not_defined(p[1])
@@ -84,18 +84,18 @@ def p_server_start(p):
         p[0] = code.start_server(p[1])
 
 
-def p_communicate_id(p):
+def par_communicate_id(p):
     'Exp : ID EQUAL HTTPGET LP URL EQUAL STRING RP SEMICOLON'
     code.update_variables(p[1], code.http_get(clean.string_cleaner(p[7])))
     p[0] = clean.id_saved(p[1])
 
 
-def p_communicate(p):
+def par_communicate(p):
     'Exp : HTTPGET LP URL EQUAL STRING RP SEMICOLON'
     p[0] = code.http_get(clean.string_cleaner(p[5]))
 
 
-def p_server_sets(p):
+def par_server_sets(p):
     'Exp : ID EQUAL ID COLON SETROUTES LP URL EQUAL STRING RP SEMICOLON'
     if p[3] not in code.variables:
         p[0] = clean.id_not_defined(p[3])
@@ -104,7 +104,7 @@ def p_server_sets(p):
         p[0] = clean.id_saved(p[1]) + "\nRoute added successfully"
 
 
-def p_server_reads(p):
+def par_server_reads(p):
     'Exp : ID COLON READDATA LP BODY EQUAL ID RP SEMICOLON'
     if p[7] not in code.variables:
         p[0] = clean.id_not_defined(p[7])
@@ -114,7 +114,7 @@ def p_server_reads(p):
         p[0] = code.read_data(p[1], p[7])
 
 
-def p_server_creates_id(p):
+def par_server_creates_id(p):
     'Exp : ID EQUAL ID COLON CREATEDATA LP OBJECT EQUAL ID RP SEMICOLON'
     if p[9] not in code.variables:
         p[0] = clean.id_not_defined(p[9])
@@ -125,7 +125,7 @@ def p_server_creates_id(p):
         p[0] = clean.id_saved(p[1])
 
 
-def p_server_read_id(p):
+def par_server_read_id(p):
     'Exp : ID EQUAL ID COLON READDATA LP BODY EQUAL ID RP SEMICOLON'
     if p[9] not in code.variables:
         p[0] = clean.id_not_defined(p[9])
@@ -136,7 +136,7 @@ def p_server_read_id(p):
         p[0] = clean.id_saved(p[1])
 
 
-def p_server_creates(p):
+def par_server_creates(p):
     'Exp : ID COLON CREATEDATA LP OBJECT EQUAL ID RP SEMICOLON'
     if p[7] not in code.variables:
         p[0] = clean.id_not_defined(p[7])
@@ -146,7 +146,7 @@ def p_server_creates(p):
         p[0] = code.create_data(p[1], p[7])
 
 
-def p_set_routes_read(p):
+def par_set_routes_read(p):
     'Exp : ID COLON SETROUTES LP URL EQUAL STRING RP COLON READDATA LP BODY EQUAL ID RP SEMICOLON'
     if p[1] not in code.variables:
         p[0] = clean.id_not_defined(p[1])
@@ -156,7 +156,7 @@ def p_set_routes_read(p):
         p[0] = code.read_data(code.add_route(p[1], clean.string_cleaner(p[7])), p[14])
 
 
-def p_set_routes_create(p):
+def par_set_routes_create(p):
     'Exp : ID COLON SETROUTES LP URL EQUAL STRING RP COLON CREATEDATA LP OBJECT EQUAL ID RP SEMICOLON'
     if p[1] not in code.variables:
         p[0] = clean.id_not_defined(p[1])
@@ -166,7 +166,7 @@ def p_set_routes_create(p):
         p[0] = code.create_data(code.add_route(p[1], clean.string_cleaner(p[7])), p[14])
 
 
-def p_set_routes_non_id(p): # returns name of added route id
+def par_set_routes_non_id(p): # returns name of added route id
     'Exp : ID COLON SETROUTES LP URL EQUAL STRING RP SEMICOLON'
     if p[1] not in code.variables:
         p[0] = clean.id_not_defined(p[1])
@@ -174,8 +174,8 @@ def p_set_routes_non_id(p): # returns name of added route id
         p[0] = code.add_route(p[1], clean.string_cleaner(p[7]))
 
 
-def p_error(p):
-    return
+def par_error(p):
+    print("Syntax error at '%s'" % p)
 
 # Build Parser
 parser = parse.yacc()
