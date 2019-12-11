@@ -12,7 +12,7 @@ servers and allowing communication with external servers.
 * [Language Syntax](#Language-Syntax)
 * [Authors and Acknowledgement](#Authors-and-Acknowledgement)
 
-##Introduction 
+## Introduction 
 
 In recent years, communication of servers between devices has become an increasingly popular trend, with Alexa and 
 Google home. Creating servers, routes and data could be time-consuming and irritating; this program seeks to simplify 
@@ -33,7 +33,7 @@ This video demonstrates the successful execution and creation of the parser, as 
 successfully through the main.py method, for simplicity. This sample method creates servers, routes and data, updates data, and 
 successfully starts the server. 
 
-##Technologies
+## Technologies
 
 * [Python 3.7 or higher](https://www.python.org/downloads/release/python-374/) - Interpreted, high-level, 
 general-purpose programming language
@@ -70,7 +70,7 @@ working with URLs
 * [Werkzeug](https://pypi.org/project/Werkzeug/) - A comprehensive Web Server Gateway Interface (WSGI)
  web application library
 
-##Installation 
+## Installation 
 
 ### Step 1 - Creating a virtual environment 
 A virtual environment is recommended for the use of this program. To create a 
@@ -168,7 +168,7 @@ could either create a group of executable lines of code in main.py and run that 
 execute each line one by one. The syntax and the executable actions are defined in the
 [Language Syntax](#Language-Syntax) section. 
 
-##Authors and Acknowledgement  
+## Authors and Acknowledgement  
 
 * **Noel Valentin** - [noelvalentin](https://github.com/noelvalentin)
 * **Alberto Perez** - [AlbertoPerez8](https://github.com/AlbertoPerez8)
