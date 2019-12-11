@@ -8,7 +8,7 @@ Digit ::= 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 |9
 
 Delimiter ::= ( | ) | [ | ] | "{" | "}" | , | ; | " | / | \
 
-Operator ::= = | :Visual Server (ViSe) Definition
+Operator ::= = | :Lang Definition
 
 
 ## Grammar
